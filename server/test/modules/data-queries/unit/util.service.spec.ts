@@ -481,5 +481,35 @@ describe('DataQueriesUtilService', () => {
         mixedString: 'String with 42 and true values',
       });
     });
+
+    it('should preserve $ patterns in string variable values', async () => {
+      const object = {
+        key: 'before-{{value}}-after',
+      };
+      const options = {
+        '{{value}}': 'p$&q',
+      };
+
+      const result = await service.parseQueryOptions(object, options, 'org-id');
+
+      expect(result).toEqual({
+        key: 'before-p$&q-after',
+      });
+    });
+
+    it('should preserve $ patterns in stringified object variable values', async () => {
+      const object = {
+        key: 'before-{{value}}-after',
+      };
+      const options = {
+        '{{value}}': { password: 'ab$$cd' },
+      };
+
+      const result = await service.parseQueryOptions(object, options, 'org-id');
+
+      expect(result).toEqual({
+        key: 'before-{"password":"ab$$cd"}-after',
+      });
+    });
   });
 });

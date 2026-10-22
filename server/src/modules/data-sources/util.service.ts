@@ -1146,7 +1146,7 @@ export class DataSourcesUtilService implements IDataSourcesUtilService {
 
     let result = str;
     for (let i = 0; i < matches.length; i++) {
-      result = result.replace(matches[i][0], replacements[i]);
+      result = result.replace(matches[i][0], () => replacements[i]);
     }
 
     return result;

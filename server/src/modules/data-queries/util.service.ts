@@ -768,10 +768,10 @@ export class DataQueriesUtilService implements IDataQueriesUtilService {
             // Check type of replacement and assign accordingly
             if (typeof replacement === 'string' || typeof replacement === 'number') {
               // If replacement is a string, perform the replace
-              resolvedValue = resolvedValue.replace(variable, String(replacement));
+              resolvedValue = resolvedValue.replace(variable, () => String(replacement));
             } else {
               // If replacement is an object or an array, assign the whole value to resolvedValue
-              resolvedValue = resolvedValue.replace(variable, JSON.stringify(replacement));
+              resolvedValue = resolvedValue.replace(variable, () => JSON.stringify(replacement));
             }
           }
           if (parent && key !== null) {
